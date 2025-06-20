@@ -1,0 +1,35 @@
+{
+    "timestamp": "2025-05-28T10:56:37.043Z",
+    "user_id": 1,
+    "task_id": 1,
+    "frame_id": 2,
+    "objects": [
+        {
+            "id": 1,
+            "type": "car",
+            "position": {
+                "x": 0.1,
+                "y": 0.2,
+                "z": 0.6
+            }
+        },
+        {
+            "id": 2,
+            "type": "person",
+            "position": {
+                "x": 0.5,
+                "y": 0.3,
+                "z": 0.0
+            }
+        },
+        {
+            "id": 3,
+            "type": "truck",
+            "position": {
+                "x": -0.3,
+                "y": 0.8,
+                "z": 1.2
+            }
+        }
+    ]
+}
