@@ -89,7 +89,7 @@ async def ping():
         dict: {"message": "pong"}
     """
     # TODO: {"message": "pong"} 응답 반환하는 코드 작성
-    pass
+    return {"message": "pong"}
 
 
 # TODO Day 1: echo API 구현
@@ -126,7 +126,7 @@ async def echo(request: EchoRequest):
         EchoResponse: echo 필드에 입력 메시지 반환
     """
     # TODO: 입력받은 메시지를 echo 필드에 담아서 반환
-    pass
+    return {"echo": request.message}
 
 
 # Day 1 추가 실습: 현재 시간 반환 API
