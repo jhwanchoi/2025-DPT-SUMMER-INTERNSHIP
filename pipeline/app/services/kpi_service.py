@@ -10,7 +10,7 @@ from typing import List, Optional, Dict, Any
 from datetime import datetime
 
 # TODO Day 2: 로컬 모듈 임포트
-from app.models.kpi import KPILog
+from app.models.kpi import KPILog, KPIObject
 from app.schemas.kpi import KPILogRequest, KPILogResponse, KPIStatsResponse
 
 # TODO Day 2: KPI 서비스 클래스 정의
@@ -27,6 +27,7 @@ class KPIService:
         self.db = db
 
     def create_log(self, kpi_data: KPILogRequest) -> int:
+        object_ids = [obj.object_id for obj in kpi_data.objects]
         """
         KPI 로그 데이터를 데이터베이스에 저장
 
@@ -42,10 +43,24 @@ class KPIService:
             user_id=kpi_data.user_id,
             task_id=kpi_data.task_id,
             frame_id=kpi_data.frame_id,
-            objects=[obj.dict() for obj in kpi_data.objects]  # Pydantic -> dict 변환
+            objects_id=object_ids
         )
 
         self.db.add(db_log)
+
+        self.db.flush()
+        
+        for obj in kpi_data.objects:
+            db_object = KPIObject(
+                log_id=db_log.id,
+                object_id=obj.object_id,
+                type=obj.type,
+                x=obj.position.x,
+                y=obj.position.y,
+                z=obj.position.z,
+            )
+            self.db.add(db_object)
+
         self.db.commit()
         self.db.refresh(db_log)
 

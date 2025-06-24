@@ -18,9 +18,10 @@ class Position(BaseModel):
 # TODO Day 2: 탐지된 객체 스키마
 class DetectedObject(BaseModel):
     """탐지된 객체 정보"""
-    id: int = Field(..., description="객체 ID")
+    object_id: int = Field(..., alias="id",description="객체 ID")
     type: str = Field(..., description="객체 타입 (car, person, etc.)")
     position: Position = Field(..., description="객체 위치")
+    
 
 # TODO Day 2: KPI 로그 요청 스키마
 class KPILogRequest(BaseModel):
@@ -54,6 +55,17 @@ class KPILogRequest(BaseModel):
             }
         }
 
+class KPIObjectResponse(BaseModel):
+    object_id: int
+    log_id: int
+    type: str
+    x: float
+    y: float
+    z: float
+
+    class Config:
+        from_attributes = True
+
 # TODO Day 2: KPI 로그 응답 스키마
 class KPILogResponse(BaseModel):
     """KPI 로그 데이터 조회 응답"""
@@ -62,12 +74,12 @@ class KPILogResponse(BaseModel):
     user_id: int
     task_id: int
     frame_id: int
-    objects: List[Dict[str, Any]]  # JSON 형태로 저장된 객체들
+    objects_id: List[KPIObjectResponse]  # JSON 형태로 저장된 객체들
     created_at: datetime
     updated_at: datetime
 
     class Config:
-        from_attributes = True  # SQLAlchemy 모델에서 변환 가능
+        from_attributes = True  
 
 # TODO Day 2: 통계 정보 응답 스키마
 class KPIStatsResponse(BaseModel):
