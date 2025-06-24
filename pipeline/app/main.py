@@ -28,21 +28,25 @@ app.add_middleware(
 )
 
 # TODO Day 2: 데이터베이스 연동 및 테이블 생성
-# from app.database import engine, Base
-# from app.models import kpi  # KPI 모델 import
+from app.database import engine, Base
+from app.models import kpi  # KPI 모델 import
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     # 애플리케이션 시작 시 데이터베이스 테이블 생성
-#     Base.metadata.create_all(bind=engine)
-#     yield
-#     # 종료 시 정리 작업 (필요한 경우)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 애플리케이션 시작 시 데이터베이스 테이블 생성
+    Base.metadata.create_all(bind=engine)
+    yield
+    # 종료 시 정리 작업 (필요한 경우)
 
-# app = FastAPI(..., lifespan=lifespan)
+app = FastAPI(..., lifespan=lifespan)
 
 # TODO Day 2: KPI 라우터 등록
-# from app.routers import kpi
-# app.include_router(kpi.router, prefix="/api/v1", tags=["KPI"])
+from app.routers import kpi
+app.include_router(kpi.router, prefix="/api/v1", tags=["KPI"])
+
+@app.post("/log")
+async def log():
+    return {"message": "log"}
 
 
 # Day 1: 기본 엔드포인트들

@@ -20,13 +20,13 @@ DATABASE_URL = os.getenv(
 
 # TODO Day 2: SQLAlchemy 엔진 생성
 # 주석 해제하고 사용하세요
-# engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL)
 
 # TODO Day 2: 세션 팩토리 생성
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # TODO Day 2: Base 클래스 생성 (모델 정의용)
-# Base = declarative_base()
+Base = declarative_base()
 
 
 # TODO Day 2: 데이터베이스 세션 의존성 함수
