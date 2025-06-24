@@ -36,15 +36,13 @@ def get_db():
     FastAPI의 Depends에서 사용
 
     Day 2 실습에서 주석을 해제하고 구현하세요:
-
+    """
+    # TODO Day 2: 데이터베이스 세션 생성 및 반환 로직 구현
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
-    """
-    # TODO Day 2: 데이터베이스 세션 생성 및 반환 로직 구현
-    pass
 
 
 # Day 2 실습 가이드:

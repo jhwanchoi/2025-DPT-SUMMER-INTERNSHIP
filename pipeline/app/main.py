@@ -10,22 +10,22 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 # Day 1: 기본 FastAPI 설정
-app = FastAPI(
-    title="KPI 데이터 수집 및 분석 시스템",
-    description="인턴십 첫 주 커리큘럼: FastAPI + PostgreSQL + Airflow",
-    version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc",
-)
+# app = FastAPI(
+#     title="KPI 데이터 수집 및 분석 시스템",
+#     description="인턴십 첫 주 커리큘럼: FastAPI + PostgreSQL + Airflow",
+#     version="1.0.0",
+#     docs_url="/docs",
+#     redoc_url="/redoc",
+# )
 
-# CORS 설정 (개발용)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# # CORS 설정 (개발용)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 # TODO Day 2: 데이터베이스 연동 및 테이블 생성
 from app.database import engine, Base
@@ -38,15 +38,28 @@ async def lifespan(app: FastAPI):
     yield
     # 종료 시 정리 작업 (필요한 경우)
 
-app = FastAPI(..., lifespan=lifespan)
+app = FastAPI(
+    title="KPI 데이터 수집 및 분석 시스템",
+    description="인턴십 첫 주 커리큘럼: FastAPI + PostgreSQL + Airflow",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    lifespan=lifespan
+)
+
+# CORS 설정 (개발용)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # TODO Day 2: KPI 라우터 등록
 from app.routers import kpi
 app.include_router(kpi.router, prefix="/api/v1", tags=["KPI"])
 
-@app.post("/log")
-async def log():
-    return {"message": "log"}
 
 
 # Day 1: 기본 엔드포인트들

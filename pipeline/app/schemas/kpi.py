@@ -4,9 +4,9 @@ Day 2에서 API 요청/응답 데이터 검증을 위해 사용됩니다.
 """
 
 # TODO Day 2: Pydantic 임포트
-# from pydantic import BaseModel, Field
-# from datetime import datetime
-# from typing import List, Dict, Any, Optional
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import List, Dict, Any, Optional
 
 # TODO Day 2: 위치 정보 스키마
 class Position(BaseModel):
