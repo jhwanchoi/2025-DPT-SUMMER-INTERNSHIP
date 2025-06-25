@@ -10,7 +10,5 @@ docker build -t ubuntu-cmake-cpp:22.04 .
 ```
 cd cproject
 
-docker run --rm -it \
-  -v .:/workspace \
-  ubuntu-cmake-cpp:22.04
+docker run --rm -it -v .:/workspace ubuntu-cmake-cpp:22.04
 ```
