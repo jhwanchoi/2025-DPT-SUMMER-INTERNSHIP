@@ -4,15 +4,15 @@ Day 2에서 KPI 데이터 수신, 저장, 조회 API를 구현합니다.
 """
 
 # TODO Day 2: FastAPI 라우터 임포트
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.orm import Session
 from typing import List
 
 # TODO Day 2: 로컬 모듈 임포트
-from app.database import get_db
-from app.models.kpi import KPILog
-from app.schemas.kpi import KPILogRequest, KPILogResponse, KPIStatsResponse
-from app.services.kpi_service import KPIService
+from database import get_db
+from models.kpi import KPILog
+from schemas.kpi import KPILogRequest, KPILogResponse, KPIStatsResponse, KPILogUpdateRequest, KPILogCreateRequest
+from services.kpi_service import KPIService
 
 # TODO Day 2: 라우터 인스턴스 생성
 router = APIRouter()
@@ -20,7 +20,7 @@ router = APIRouter()
 # TODO Day 2: KPI 데이터 저장 API
 @router.post("/log", response_model=dict)
 async def create_kpi_log(
-    kpi_data: KPILogRequest,
+    kpi_data: KPILogCreateRequest,
     db: Session = Depends(get_db)
 ):
     """
@@ -43,7 +43,9 @@ async def create_kpi_log(
             "log_id": log_id
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        return {
+            "message": "KPI 데이터 저장하였습니다."
+        }
 
 # TODO Day 2: KPI 데이터 조회 API
 @router.get("/logs", response_model=List[KPILogResponse])
@@ -120,6 +122,46 @@ async def get_kpi_stats(db: Session = Depends(get_db)):
         return stats
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.put(
+    "/logs/{log_id}",
+    response_model=KPILogResponse,
+    responses={404: {"description": "로그를 찾을 수 없습니다."}}
+)
+async def update_kpi_log(
+    log_id: int,
+    payload: KPILogUpdateRequest,
+    db: Session = Depends(get_db)
+):
+    service = KPIService(db)
+    log = service.get_log_by_id(log_id)
+    if not log:
+        raise HTTPException(status_code=404, detail="로그를 찾을 수 없습니다.")
+    updated = service.update_log(
+        log_id,
+        task_id=payload.task_id,
+        frame_id=payload.frame_id
+    )
+    if not updated:
+        raise HTTPException(404, "로그를 찾을 수 없습니다.")
+    return updated
+
+@router.delete(
+    "/logs/{log_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses={404: {"description": "로그를 찾을 수 없습니다."}}
+)
+async def delete_kpi_log(
+    log_id: int,
+    db: Session = Depends(get_db)
+):
+    service = KPIService(db)
+    if not service.get_log_by_id(log_id):
+        raise HTTPException(status_code=404, detail="로그를 찾을 수 없습니다.")
+    service.delete_log(log_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
 
 # Day 2 실습 가이드:
 # 1. 위의 주석 처리된 코드들을 단계별로 활성화

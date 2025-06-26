@@ -74,7 +74,7 @@ class KPILogResponse(BaseModel):
     user_id: int
     task_id: int
     frame_id: int
-    objects_id: List[KPIObjectResponse]  # JSON 형태로 저장된 객체들
+    objects_id: List[int]  # JSON 형태로 저장된 객체들
     created_at: datetime
     updated_at: datetime
 
@@ -89,6 +89,27 @@ class KPIStatsResponse(BaseModel):
     object_types: Dict[str, int] = Field(..., description="객체 타입별 개수")
     latest_log_time: Optional[datetime] = Field(None, description="최근 로그 시간")
 
+
+class KPILogUpdateRequest(BaseModel):
+    task_id: int
+    frame_id: int
+
+class DetectedObjectRequest(BaseModel):
+    type: str = Field(..., description="객체 타입 (car, person, etc.)")
+    position: Position = Field(..., description="객체 위치")
+
+class DetectedObjectCreate(BaseModel):
+    type: str = Field(..., description="객체 타입 (car, person, etc.)")
+    position: Position = Field(..., description="객체 위치")
+
+
+class KPILogCreateRequest(BaseModel):
+    timestamp: datetime = Field(..., description="KPI 데이터 생성 시각")
+    user_id:  int       = Field(..., description="사용자 ID")
+    task_id:  int       = Field(..., description="작업 ID")
+    frame_id: int       = Field(..., description="프레임 ID")
+    objects:  List[DetectedObjectCreate] = Field(..., description="탐지된 객체 목록")
+    
 # Day 2 실습 가이드:
 # 1. 위의 주석 처리된 스키마들을 활성화
 # 2. Pydantic 모델의 유효성 검증 기능 확인

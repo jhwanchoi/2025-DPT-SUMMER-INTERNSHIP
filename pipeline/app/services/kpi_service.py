@@ -8,10 +8,11 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List, Optional, Dict, Any
 from datetime import datetime
+from fastapi import HTTPException
 
 # TODO Day 2: 로컬 모듈 임포트
-from app.models.kpi import KPILog, KPIObject
-from app.schemas.kpi import KPILogRequest, KPILogResponse, KPIStatsResponse
+from models.kpi import KPILog, KPIObject
+from schemas.kpi import KPILogCreateRequest, KPILogResponse, KPIStatsResponse
 
 # TODO Day 2: KPI 서비스 클래스 정의
 class KPIService:
@@ -26,45 +27,35 @@ class KPIService:
         """
         self.db = db
 
-    def create_log(self, kpi_data: KPILogRequest) -> int:
-        object_ids = [obj.object_id for obj in kpi_data.objects]
-        """
-        KPI 로그 데이터를 데이터베이스에 저장
-
-        Args:
-            kpi_data: 저장할 KPI 데이터
-
-        Returns:
-            int: 생성된 로그의 ID
-        """
-        # TODO Day 2: KPILog 모델 인스턴스 생성 및 저장
-        db_log = KPILog(
+    def create_log(self, kpi_data: KPILogCreateRequest) -> int:
+        # 1) KPI 로그 레코드 생성
+        log = KPILog(
             timestamp=kpi_data.timestamp,
             user_id=kpi_data.user_id,
             task_id=kpi_data.task_id,
             frame_id=kpi_data.frame_id,
-            objects_id=object_ids
         )
+        self.db.add(log)
+        self.db.commit()
+        self.db.refresh(log)
 
-        self.db.add(db_log)
+        if not kpi_data.objects :
+            return log.id
 
-        self.db.flush()
-        
+        # 2) 탐지 객체들 삽입 (object_id 는 DB가 자동 생성)
         for obj in kpi_data.objects:
-            db_object = KPIObject(
-                log_id=db_log.id,
-                object_id=obj.object_id,
+            kobj = KPIObject(
+                log_id=log.id,
                 type=obj.type,
                 x=obj.position.x,
                 y=obj.position.y,
                 z=obj.position.z,
             )
-            self.db.add(db_object)
-
+            self.db.add(kobj)
         self.db.commit()
-        self.db.refresh(db_log)
 
-        return db_log.id
+        # 3) 생성된 로그의 PK 리턴
+        return log.id
 
     def get_logs(self, skip: int = 0, limit: int = 100) -> List[KPILogResponse]:
         """
@@ -144,6 +135,24 @@ class KPIService:
                 object_types[obj_type] = object_types.get(obj_type, 0) + 1
 
         return object_types
+    
+    def update_log(self, log_id: int, task_id: int, frame_id: int) -> KPILogResponse:
+        log: KPILog = self.db.query(KPILog).filter(KPILog.id == log_id).first()
+        if not log:
+            raise HTTPException(status_code=404, detail="로그를 찾을 수 없습니다.")
+        log.task_id = task_id
+        log.frame_id = frame_id
+        self.db.commit()
+        self.db.refresh(log)
+        # Pydantic 모델로 변환
+        return KPILogResponse.from_orm(log)
+
+    def delete_log(self, log_id: int) -> None:
+        log: KPILog = self.db.query(KPILog).filter(KPILog.id == log_id).first()
+        if not log:
+            return
+        self.db.delete(log)
+        self.db.commit()
 
 # Day 2 실습 가이드:
 # 1. 위의 주석 처리된 메서드들을 단계별로 구현

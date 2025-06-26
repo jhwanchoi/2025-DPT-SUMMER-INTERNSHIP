@@ -7,7 +7,7 @@ Day 2에서 PostgreSQL 테이블 구조를 정의합니다.
 from sqlalchemy import Column, Integer, String, DateTime, JSON, Float, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from app.database import Base
+from database import Base
 
 # TODO Day 2: KPI 로그 모델 정의
 class KPILog(Base):
@@ -31,7 +31,7 @@ class KPILog(Base):
     user_id = Column(Integer, nullable=False, comment="사용자 ID")
     task_id = Column(Integer, nullable=False, comment="작업 ID")
     frame_id = Column(Integer, nullable=False, comment="프레임 ID")
-    objects_id = Column(JSON, nullable=False) 
+    objects_id = Column(JSON, nullable=True, server_default="[]")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     objects = relationship("KPIObject", back_populates="log", cascade="all, delete-orphan")

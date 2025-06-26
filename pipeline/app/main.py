@@ -28,8 +28,8 @@ from contextlib import asynccontextmanager
 # )
 
 # TODO Day 2: 데이터베이스 연동 및 테이블 생성
-from app.database import engine, Base
-from app.models import kpi  # KPI 모델 import
+from database import engine, Base
+from models import kpi  # KPI 모델 import
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -57,7 +57,7 @@ app.add_middleware(
 )
 
 # TODO Day 2: KPI 라우터 등록
-from app.routers import kpi
+from routers import kpi
 app.include_router(kpi.router, prefix="/api/v1", tags=["KPI"])
 
 
