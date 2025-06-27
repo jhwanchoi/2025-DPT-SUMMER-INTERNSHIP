@@ -1,0 +1,55 @@
+[2025-06-27T01:45:10.523+0000] {processor.py:157} INFO - Started process (PID=35) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:45:10.524+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:45:10.526+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:45:10.526+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:45:10.534+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:45:10.544+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.024 seconds
+[2025-06-27T01:45:40.789+0000] {processor.py:157} INFO - Started process (PID=37) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:45:40.790+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:45:40.792+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:45:40.792+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:45:40.795+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:45:40.812+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.026 seconds
+[2025-06-27T01:46:11.144+0000] {processor.py:157} INFO - Started process (PID=39) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:11.145+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:46:11.147+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:46:11.147+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:11.152+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:11.164+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.027 seconds
+[2025-06-27T01:46:41.540+0000] {processor.py:157} INFO - Started process (PID=41) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:41.541+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:46:41.544+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:46:41.544+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:41.546+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:41.556+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.019 seconds
+[2025-06-27T01:46:57.642+0000] {processor.py:157} INFO - Started process (PID=35) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:57.642+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:46:57.644+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:46:57.644+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:57.648+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:46:57.660+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.020 seconds
+[2025-06-27T01:47:28.043+0000] {processor.py:157} INFO - Started process (PID=37) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:47:28.045+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:47:28.047+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:47:28.047+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:47:28.050+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:47:28.063+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.025 seconds
+[2025-06-27T01:47:58.410+0000] {processor.py:157} INFO - Started process (PID=39) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:47:58.413+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:47:58.416+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:47:58.416+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:47:58.421+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:47:58.435+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.029 seconds
+[2025-06-27T01:48:28.802+0000] {processor.py:157} INFO - Started process (PID=42) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:48:28.803+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:48:28.806+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:48:28.806+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:48:28.811+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:48:28.827+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.030 seconds
+[2025-06-27T01:48:59.140+0000] {processor.py:157} INFO - Started process (PID=44) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:48:59.140+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:48:59.142+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:48:59.142+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:48:59.144+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:48:59.157+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.020 seconds
+[2025-06-27T01:49:29.436+0000] {processor.py:157} INFO - Started process (PID=46) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:49:29.437+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:49:29.439+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:49:29.439+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:49:29.442+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:49:29.454+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.020 seconds
+[2025-06-27T01:49:59.781+0000] {processor.py:157} INFO - Started process (PID=48) to work on /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:49:59.782+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/insert_dummy_kpi.py for tasks to queue
+[2025-06-27T01:49:59.784+0000] {logging_mixin.py:154} INFO - [2025-06-27T01:49:59.784+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:49:59.788+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/insert_dummy_kpi.py
+[2025-06-27T01:49:59.804+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/insert_dummy_kpi.py took 0.027 seconds
