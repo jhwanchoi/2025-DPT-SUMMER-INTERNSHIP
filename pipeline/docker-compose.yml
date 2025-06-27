@@ -46,66 +46,116 @@ services:
       - kpi_network
 
   # Redis (Airflow용 - Day 3에서 사용)
-  # redis:
-  #   image: redis:7
-  #   container_name: kpi_redis
-  #   ports:
-  #     - "6379:6379"
-  #   networks:
-  #     - kpi_network
+  redis:
+    image: redis:7
+    container_name: kpi_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - kpi_network
 
-  # # Airflow Webserver (Day 3에서 사용)
-  # airflow-webserver:
-  #   image: apache/airflow:2.7.3
-  #   container_name: kpi_airflow_webserver
-  #   depends_on:
-  #     - postgres
-  #     - redis
-  #   environment:
-  #     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
-  #     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://kpi_user:kpi_password@postgres/kpi_db
-  #     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://kpi_user:kpi_password@postgres/kpi_db
-  #     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
-  #     AIRFLOW__CORE__FERNET_KEY: ''
-  #     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-  #     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-  #     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
-  #     _PIP_ADDITIONAL_REQUIREMENTS: ''
-  #   volumes:
-  #     - ./airflow/dags:/opt/airflow/dags
-  #     - ./airflow/logs:/opt/airflow/logs
-  #     - ./airflow/plugins:/opt/airflow/plugins
-  #     - ./airflow/scripts:/opt/airflow/scripts
-  #   ports:
-  #     - "8080:8080"
-  #   command: webserver
-  #   networks:
-  #     - kpi_network
+  # Airflow 초기화 (Day 3에서 사용)
+  airflow-init:
+    image: apache/airflow:2.7.3
+    container_name: kpi_airflow_init
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://kpi_user:kpi_password@postgres/kpi_db
+      AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://kpi_user:kpi_password@postgres/kpi_db
+      AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      _PIP_ADDITIONAL_REQUIREMENTS: ''
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/scripts:/opt/airflow/scripts
+    command: bash /opt/airflow/scripts/init-airflow.sh
+    networks:
+      - kpi_network
 
-  # # Airflow Scheduler (Day 3에서 사용)
-  # airflow-scheduler:
-  #   image: apache/airflow:2.7.3
-  #   container_name: kpi_airflow_scheduler
-  #   depends_on:
-  #     - postgres
-  #     - redis
-  #   environment:
-  #     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
-  #     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://kpi_user:kpi_password@postgres/kpi_db
-  #     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://kpi_user:kpi_password@postgres/kpi_db
-  #     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
-  #     AIRFLOW__CORE__FERNET_KEY: ''
-  #     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-  #     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-  #     _PIP_ADDITIONAL_REQUIREMENTS: ''
-  #   volumes:
-  #     - ./airflow/dags:/opt/airflow/dags
-  #     - ./airflow/logs:/opt/airflow/logs
-  #     - ./airflow/plugins:/opt/airflow/plugins
-  #     - ./airflow/scripts:/opt/airflow/scripts
-  #   command: scheduler
-  #   networks:
-  #     - kpi_network
+  # Airflow Webserver (Day 3에서 사용)
+  airflow-webserver:
+    image: apache/airflow:2.7.3
+    container_name: kpi_airflow_webserver
+    depends_on:
+      - postgres
+      - redis
+      - airflow-init
+    environment:
+      AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://kpi_user:kpi_password@postgres/kpi_db
+      AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://kpi_user:kpi_password@postgres/kpi_db
+      AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
+      _PIP_ADDITIONAL_REQUIREMENTS: ''
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/scripts:/opt/airflow/scripts
+    ports:
+      - "8080:8080"
+    command: webserver
+    networks:
+      - kpi_network
+
+  # Airflow Scheduler (Day 3에서 사용)
+  airflow-scheduler:
+    image: apache/airflow:2.7.3
+    container_name: kpi_airflow_scheduler
+    depends_on:
+      - postgres
+      - redis
+      - airflow-init
+    environment:
+      AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://kpi_user:kpi_password@postgres/kpi_db
+      AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://kpi_user:kpi_password@postgres/kpi_db
+      AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      _PIP_ADDITIONAL_REQUIREMENTS: ''
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/scripts:/opt/airflow/scripts
+    command: scheduler
+    networks:
+      - kpi_network
+
+  airflow-worker:
+    image: apache/airflow:2.7.3
+    container_name: kpi_airflow_worker
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://kpi_user:kpi_password@postgres/kpi_db
+      AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://kpi_user:kpi_password@postgres/kpi_db
+      AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/scripts:/opt/airflow/scripts
+    command: celery worker
+    networks:
+      - kpi_network
 
 volumes:
   postgres_data:
